@@ -1,3 +1,4 @@
+from collections import defaultdict 
 
 def find_non_digit(string):
     # print("next non digit: ", string)
@@ -11,6 +12,9 @@ def find_next_digit(string):
         if string[i].isdigit():
             return i
     return None
+
+# tracks location of *: [parts]
+gears = defaultdict(lambda: [])
 
 # returns the start + end x of the next number as a generator function
 # (number, start x, end x)
@@ -32,24 +36,37 @@ def return_next_number(line):
         current_index = end
         yield (num, start, end)
 
+# returns True/False, + location of * if exists
 def contains_symbol(string):
     print("symbol check: ", string)
-    return any(not e.isdigit() and e != "." for e in string)
+    is_valid = any(not e.isdigit() and e != "." for e in string)
+    star = string.index("*") if "*" in string else None
+    return is_valid, star
 
-def valid_part(y, start_x, end_x, content):
+def valid_part(num, y, start_x, end_x, content):
     # y-1, start_x-1, end_x+1
     start = max(start_x -1, 0)
-    if contains_symbol(content[y-1][start:end_x+1].strip()):
-        return True
+    is_valid = False
+    valid, star = contains_symbol(content[y-1][start:end_x+1].strip())
+    if valid:
+        is_valid = True
+        if star != None:
+            gears[(y-1, start + star)].append(num)
     # y: start_x-1 and end_x+1
-    if contains_symbol(content[y][start:end_x+1].strip()):
-        return True
+    valid, star = contains_symbol(content[y][start:end_x+1].strip())
+    if valid:
+        is_valid = True
+        if star != None:
+            gears[(y, start + star)].append(num)    
     # y+1: start_x-1, end_x+1
     if y+1 >= len(content):
-        return False
-    if contains_symbol(content[y+1][start:end_x+1].strip()):
-        return True
-    return False
+        return is_valid
+    valid, star = contains_symbol(content[y+1][start:end_x+1].strip())
+    if valid:
+        is_valid = True
+        if star != None:
+            gears[(y+1, start + star)].append(num)
+    return is_valid
 
 def calc_sum_of_parts_num(input):
     # numbers only exist horizontally. so check check y, min x -> max x, if there are any symbols. let's just use a map
@@ -75,12 +92,15 @@ def calc_sum_of_parts_num(input):
                 end = result[2]
 
                 # need to check if this counts
-                if valid_part(y, start, end, content):
+                if valid_part(num, y, start, end, content):
                     sum_total_parts += num
                 else:
                     print("invalid: ", num)
-
-    return sum_total_parts
+    print(gears)
+    valid_gears = filter(lambda x: len(x) == 2, gears.values())
+    gear_sums = sum(map(lambda x: x[0] * x[1], valid_gears))
+    print(sum_total_parts)
+    print(gear_sums)
 
 if __name__ == '__main__':
-    print("result: ", calc_sum_of_parts_num('3_example_input.txt'))
+    calc_sum_of_parts_num('3_input.txt')
