@@ -13,7 +13,6 @@ def calc_matches(sets):
     matches = len(sets[0] & sets[1])
     return matches if matches > 0 else 0
     
-
 def calc_total_points(input_file):
     with open(input_file) as f:
         # parse out the winning and nums set
@@ -27,6 +26,24 @@ def calc_total_points(input_file):
         # sum the scores
         print(sum(scores))
 
+# for part 2
+def calc_total_cards(input_file):
+    with open(input_file) as f:
+        content = f.readlines()
+        n = len(content)
+        card_counts = [1] * n
+        for i in range(n):
+            # for each card, figure out the number of matches for itself
+            line = content[i]
+            winnings, nums = parse_sets(line)
+            matches = calc_matches([winnings, nums])
+            # based on the matches, increase the counter
+            print(matches)
+            for j in range(matches):
+                card_counts[i + j + 1] += card_counts[i]
+        print(card_counts)
+        print(sum(card_counts))
 
 if __name__ == "__main__":
-    calc_total_points("4_input.txt")
+    # calc_total_points("4_input.txt")
+    calc_total_cards("4_input.txt")
