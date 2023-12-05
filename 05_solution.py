@@ -39,125 +39,131 @@ def calc_lowest_location_number(input_file):
         # parse the first line which are the list of seeds
         seeds = list(map(lambda x: int(x), f.readline().split(":")[1].split()))
         print("Seeds:" , seeds)
-        # parse the maps 
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # for part 2 turn the seeds based on the pairs
+        seeds_set = set()
+        for i in range(0, len(seeds), 2):
+            seeds_set.update(range(seeds[i], seeds[i] + seeds[i+1]))
+        print("Converted seeds:", len(seeds_set))
+
+        # # parse the maps 
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
             
-        # seed 2 soil
-        seed2soil = Mapping("seed", "soil")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            seed2soil.parse_range_line(line)
-        print(seed2soil)
-        soils = seed2soil.map(seeds)
-        print("soil: ", soils)
+        # # seed 2 soil
+        # seed2soil = Mapping("seed", "soil")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     seed2soil.parse_range_line(line)
+        # print(seed2soil)
+        # soils = seed2soil.map(seeds_set)
+        # print("soil: ", soils)
 
-        # soil 2 fert
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # # soil 2 fert
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
 
-        soil2fert = Mapping("soil", "fert")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            soil2fert.parse_range_line(line)
-        print(soil2fert)
-        ferts = soil2fert.map(soils)
-        print("fert: ", ferts)
+        # soil2fert = Mapping("soil", "fert")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     soil2fert.parse_range_line(line)
+        # print(soil2fert)
+        # ferts = soil2fert.map(soils)
+        # print("fert: ", ferts)
 
-        # fert 2 water
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # # fert 2 water
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
 
-        fert2water = Mapping("fert", "water")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            fert2water.parse_range_line(line)
-        print(fert2water)
-        waters = fert2water.map(ferts)
-        print("waters: ", waters)
+        # fert2water = Mapping("fert", "water")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     fert2water.parse_range_line(line)
+        # print(fert2water)
+        # waters = fert2water.map(ferts)
+        # print("waters: ", waters)
 
-        # water 2 light
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # # water 2 light
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
 
-        water2light = Mapping("water", "light")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            water2light.parse_range_line(line)
-        print(water2light)
-        lights = water2light.map(waters)
-        print("lights: ", lights)
+        # water2light = Mapping("water", "light")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     water2light.parse_range_line(line)
+        # print(water2light)
+        # lights = water2light.map(waters)
+        # print("lights: ", lights)
 
-        # light 2 temp
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # # light 2 temp
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
 
-        light2temp = Mapping("light", "temp")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            light2temp.parse_range_line(line)
-        print(light2temp)
-        temps = light2temp.map(lights)
-        print("temps: ", temps)
+        # light2temp = Mapping("light", "temp")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     light2temp.parse_range_line(line)
+        # print(light2temp)
+        # temps = light2temp.map(lights)
+        # print("temps: ", temps)
 
-        # temp 2 humbid
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # # temp 2 humbid
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
 
-        temp2humbid = Mapping("temp", "humid")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            temp2humbid.parse_range_line(line)
-        print(temp2humbid)
-        humids = temp2humbid.map(temps)
-        print("humids: ", humids)
+        # temp2humbid = Mapping("temp", "humid")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     temp2humbid.parse_range_line(line)
+        # print(temp2humbid)
+        # humids = temp2humbid.map(temps)
+        # print("humids: ", humids)
 
-        # humid to loc
-        while True:
-            line = f.readline() 
-            if ":" in line:
-                break
+        # # humid to loc
+        # while True:
+        #     line = f.readline() 
+        #     if ":" in line:
+        #         break
 
-        humid2loc = Mapping("humid", "loc")
-        while True:
-            line = f.readline().strip()
-            if len(line) == 0:
-                break
-            # pares line
-            humid2loc.parse_range_line(line)
-        print(humid2loc)
-        locs = humid2loc.map(humids)
-        print("locs: ", locs)
+        # humid2loc = Mapping("humid", "loc")
+        # while True:
+        #     line = f.readline().strip()
+        #     if len(line) == 0:
+        #         break
+        #     # pares line
+        #     humid2loc.parse_range_line(line)
+        # print(humid2loc)
+        # locs = humid2loc.map(humids)
+        # print("locs: ", locs)
 
         # find the lowest location
         print(min(locs))
